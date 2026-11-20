@@ -116,6 +116,9 @@ impl EditorView {
             decorations.add_decoration(line_decoration);
         }
 
+        // Low-level decorations: linked source<->asm splits, jump labels, perf heat.
+        super::lowlevel::add_decorations(editor, doc, view, inner, theme, is_focused, &mut decorations);
+
         let syntax_highlighter =
             Self::doc_syntax_highlighter(doc, view_offset.anchor, inner.height, &loader);
         let mut overlays = Vec::new();

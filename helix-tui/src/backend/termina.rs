@@ -102,7 +102,9 @@ impl TerminaBackend {
         let start = Instant::now();
 
         // HACK: emitting OSC11 / OSC111 seems to break SGR and cause flickering in tmux.
-        capabilities.dynamic_background_color = std::env::var_os("TMUX").is_none();
+        // Kitty applies terminal opacity to this color, making opaque themes translucent.
+        capabilities.dynamic_background_color = std::env::var_os("TMUX").is_none()
+            && std::env::var_os("KITTY_WINDOW_ID").is_none();
 
         capabilities.kitty_keyboard = match config.kitty_keyboard_protocol {
             KittyKeyboardProtocolConfig::Disabled => KittyKeyboardSupport::None,

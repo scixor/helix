@@ -3019,6 +3019,17 @@ const WRITE_NO_CODE_ACTIONS_FLAG: Flag = Flag {
 
 pub const TYPABLE_COMMAND_LIST: &[TypableCommand] = &[
     TypableCommand {
+        name: "inspect-num",
+        aliases: &["num"],
+        doc: "Inspect numeric literal under cursor (or argument) as dec/hex/oct/bin/bits/IEEE-754 float.",
+        fun: ui::lowlevel::inspect_number,
+        completer: CommandCompleter::none(),
+        signature: Signature {
+            positionals: (0, Some(1)),
+            ..Signature::DEFAULT
+        },
+    },
+    TypableCommand {
         name: "exit",
         aliases: &["x", "xit"],
         doc: "Write changes to disk if the buffer is modified and then quit. Accepts an optional path (:exit some/path.txt).",
