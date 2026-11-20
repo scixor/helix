@@ -1018,6 +1018,13 @@ pub fn goto_declaration(cx: &mut Context) {
 }
 
 pub fn goto_definition(cx: &mut Context) {
+    let has_lsp = doc!(cx.editor)
+        .language_servers_with_feature(LanguageServerFeature::GotoDefinition)
+        .next()
+        .is_some();
+    if !has_lsp && ui::lowlevel::try_goto_asm_label(cx) {
+        return;
+    }
     goto_single_impl(
         cx,
         LanguageServerFeature::GotoDefinition,

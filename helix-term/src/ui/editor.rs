@@ -130,6 +130,10 @@ impl EditorView {
             &text_annotations,
         ));
 
+        if let Some(overlay) = super::lowlevel::overlay_highlights(doc, view, inner.height, theme) {
+            overlays.push(overlay);
+        }
+
         if doc
             .language_config()
             .and_then(|config| config.rainbow_brackets)
@@ -1642,6 +1646,8 @@ impl Component for EditorView {
         if use_bufferline {
             Self::render_bufferline(cx.editor, area.with_height(1), surface);
         }
+
+        super::lowlevel::sync_linked_views(cx.editor);
 
         for (view, is_focused) in cx.editor.tree.views() {
             let doc = cx.editor.document(view.doc).unwrap();

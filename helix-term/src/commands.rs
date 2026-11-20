@@ -1466,6 +1466,11 @@ fn goto_file_impl(cx: &mut Context, action: Action) {
         return;
     }
 
+    // Smart path[:line[:col]] resolution (workspace-relative + suffix picker)
+    if fallback_ranges.len() == 1 && ui::lowlevel::try_goto_path_at_cursor(cx, action) {
+        return;
+    }
+
     let paths: Vec<_> = if fallback_ranges.len() == 1 && fallback_ranges[0].len() == 1 {
         let selection = fallback_ranges[0];
         // Cap the search at roughly 1k bytes around the cursor.

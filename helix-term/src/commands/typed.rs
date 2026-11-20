@@ -3030,6 +3030,17 @@ pub const TYPABLE_COMMAND_LIST: &[TypableCommand] = &[
         },
     },
     TypableCommand {
+        name: "mca",
+        aliases: &[],
+        doc: "Run llvm-mca on the current asm selection (or enclosing function) and open linked report in a split.",
+        fun: ui::lowlevel::run_mca,
+        completer: CommandCompleter::none(),
+        signature: Signature {
+            positionals: (0, Some(1)),
+            ..Signature::DEFAULT
+        },
+    },
+    TypableCommand {
         name: "exit",
         aliases: &["x", "xit"],
         doc: "Write changes to disk if the buffer is modified and then quit. Accepts an optional path (:exit some/path.txt).",
